@@ -1,6 +1,6 @@
 # ArabaIQ — Deploy kılavuzu
 
-Bu dosya, `araba-iq` branch'ine her push'un otomatik olarak `arabaiq.com`'a
+Bu dosya, `main` branch'ine her push'un otomatik olarak `arabaiq.com`'a
 yansımasını sağlayan altyapıyı **sıfırdan bir kere** kurmak için gereken
 adımları anlatır. Kurulum tamamlandıktan sonra gündelik akış şudur:
 
@@ -17,7 +17,7 @@ Elle 7 adım yapmak yerine bu 3 script ile ~5 dk'da kurulum:
 ```bash
 # ── 1. VPS'te (bir kere) ──────────────────────────────────────────────
 ssh root@<VPS_IP>
-curl -fsSL https://raw.githubusercontent.com/Emirdumn/dopamind/araba-iq/deploy/bootstrap-vps.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Emirdumn/arabaiq-platform/main/deploy/bootstrap-vps.sh | bash
 # → çıktıda sana 4 GitHub Secret değeri verecek, kopyala
 
 # ── 2. Local makinende ────────────────────────────────────────────────
@@ -89,12 +89,8 @@ docker compose version
 ```bash
 mkdir -p /opt/arabaiq
 cd /opt/arabaiq
-git clone https://github.com/Emirdumn/dopamind.git .
-git checkout araba-iq
+git clone https://github.com/Emirdumn/arabaiq-platform.git .
 ```
-
-> `araba-iq` repo'su `dopamind.git` içinde bir branch olarak yaşıyor. Asıl
-> kaynak o; `araba-iq-origin` remote'u ayrı bir mirror.
 
 ### 1.3 Production env dosyası
 
@@ -225,7 +221,7 @@ git commit --allow-empty -m "ci: deploy smoke test"
 git push
 ```
 
-GitHub → Actions sekmesinde `Deploy araba-iq to VPS` workflow'u çalışmalı.
+GitHub → Actions sekmesinde `Deploy ArabaIQ to VPS` workflow'u çalışmalı.
 Yeşil onay geldikten sonra `curl -I http://arabaiq.com` ile yeni deploy'u
 doğrula.
 

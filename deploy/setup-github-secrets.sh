@@ -21,7 +21,7 @@
 
 set -euo pipefail
 
-REPO="${GH_REPO:-Emirdumn/dopamind}"
+REPO="${GH_REPO:-Emirdumn/arabaiq-platform}"
 
 c_bold=$'\033[1m'; c_green=$'\033[32m'; c_yellow=$'\033[33m'
 c_red=$'\033[31m'; c_blue=$'\033[34m'; c_reset=$'\033[0m'

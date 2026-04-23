@@ -13,7 +13,7 @@
 #
 #  Kullanım:
 #    ssh root@VPS_IP
-#    curl -fsSL https://raw.githubusercontent.com/Emirdumn/dopamind/araba-iq/deploy/bootstrap-vps.sh | bash
+#    curl -fsSL https://raw.githubusercontent.com/Emirdumn/arabaiq-platform/main/deploy/bootstrap-vps.sh | bash
 #
 #  VEYA (repo zaten clone'luysa):
 #    cd /opt/arabaiq && bash deploy/bootstrap-vps.sh
@@ -22,16 +22,16 @@
 #    NONINTERACTIVE=1   — soru sormadan varsayılanlarla devam et
 #    SKIP_SEED=1        — seed_demo.py çalıştırma
 #    SKIP_NGINX=1       — nginx config'e dokunma
-#    REPO_URL=...       — farklı bir git remote (default: dopamind)
-#    BRANCH=...         — farklı bir branch (default: araba-iq)
+#    REPO_URL=...       — farklı bir git remote (default: arabaiq-platform)
+#    BRANCH=...         — farklı bir branch (default: main)
 # ═══════════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
 
 # ── Defaults ──────────────────────────────────────────────────────────────
 PROJECT_DIR="${PROJECT_DIR:-/opt/arabaiq}"
-REPO_URL="${REPO_URL:-https://github.com/Emirdumn/dopamind.git}"
-BRANCH="${BRANCH:-araba-iq}"
+REPO_URL="${REPO_URL:-https://github.com/Emirdumn/arabaiq-platform.git}"
+BRANCH="${BRANCH:-main}"
 NONINTERACTIVE="${NONINTERACTIVE:-0}"
 SKIP_SEED="${SKIP_SEED:-0}"
 SKIP_NGINX="${SKIP_NGINX:-0}"
@@ -65,7 +65,7 @@ echo "${c_bold}"
 cat <<'BANNER'
   ╔═══════════════════════════════════════════════════╗
   ║   ArabaIQ — VPS bootstrap                         ║
-  ║   github.com/Emirdumn/dopamind @ araba-iq         ║
+  ║   github.com/Emirdumn/arabaiq-platform @ main     ║
   ╚═══════════════════════════════════════════════════╝
 BANNER
 echo "${c_reset}"
@@ -246,7 +246,7 @@ cat <<EOF
   2. Cloudflare SSL → Flexible (veya local'den ./deploy/setup-cloudflare.sh çalıştır)
   3. GitHub Secrets:
      - Local makinende: ./deploy/setup-github-secrets.sh
-     - VEYA elle: github.com/Emirdumn/dopamind → Settings → Secrets → Actions
+     - VEYA elle: github.com/Emirdumn/arabaiq-platform → Settings → Secrets → Actions
   4. Test push:
      git commit --allow-empty -m "ci: smoke test" && git push
 

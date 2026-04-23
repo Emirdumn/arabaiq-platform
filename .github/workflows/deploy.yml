@@ -1,15 +1,15 @@
-name: Deploy araba-iq to VPS
+name: Deploy ArabaIQ to VPS
 
 # ───────────────────────────────────────────────────────────────────────
-#  Triggers on every push to the `araba-iq` branch. SSHes into the VPS,
+#  Triggers on every push to the `main` branch. SSHes into the VPS,
 #  pulls the latest commit, rebuilds Docker images, and rolls the stack
 #  with zero-ish downtime (docker compose up -d, same container names).
 #
 #  Required GitHub Secrets (Settings → Secrets → Actions):
-#    VPS_HOST            e.g. 203.0.113.42  (or a hostname)
-#    VPS_USER            typically "root"
+#    VPS_HOST            e.g. 43.229.94.182  (or a hostname)
+#    VPS_USER            typically "root" or "ubuntu"
 #    VPS_SSH_KEY         the PRIVATE half of an ed25519 keypair whose
-#                        PUBLIC half is in /root/.ssh/authorized_keys on
+#                        PUBLIC half is in ~/.ssh/authorized_keys on
 #                        the VPS. Generate once with:
 #                            ssh-keygen -t ed25519 -C "github-deploy"
 #    VPS_PROJECT_PATH    absolute path on the VPS, e.g. /opt/arabaiq
@@ -21,7 +21,7 @@ name: Deploy araba-iq to VPS
 on:
   push:
     branches:
-      - araba-iq
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -45,8 +45,8 @@ jobs:
 
             echo "▶ Fetching latest commit…"
             git fetch --all --prune
-            git checkout araba-iq
-            git reset --hard origin/araba-iq
+            git checkout main
+            git reset --hard origin/main
 
             echo "▶ Building and starting containers…"
             docker compose -f docker-compose.prod.yml --env-file .env.production pull || true
