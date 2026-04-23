@@ -58,6 +58,17 @@ jobs:
             echo "▶ Deploy finished at $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
             docker compose -f docker-compose.prod.yml --env-file .env.production ps
 
-            echo "▶ Smoke test (loopback):"
-            curl -fsS --max-time 5 http://127.0.0.1:8101/health || { echo "API health failed"; exit 1; }
-            curl -fsS --max-time 5 -o /dev/null -w "frontend HTTP %{http_code}\n" http://127.0.0.1:3001/tr
+            echo "▶ Smoke test (loopback, 30s retry window):"
+            ok=0
+            for i in $(seq 1 15); do
+              if curl -fsS --max-time 3 http://127.0.0.1:8101/health >/dev/null 2>&1; then
+                ok=1; break
+              fi
+              sleep 2
+            done
+            [[ "$ok" == "1" ]] || { echo "✗ API /health did not become ready"; exit 1; }
+            echo "  ✓ API /health OK"
+
+            fe_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://127.0.0.1:3001/tr || echo 000)
+            echo "  frontend /tr → HTTP $fe_code"
+            [[ "$fe_code" == "200" ]] || { echo "✗ frontend not serving /tr"; exit 1; }
